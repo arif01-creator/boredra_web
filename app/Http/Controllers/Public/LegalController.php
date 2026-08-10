@@ -14,7 +14,7 @@ class LegalController extends Controller
     {
         return Inertia::render('privacy', [
             'page' => Page::where('slug', 'privacy')->first(),
-            'seo' => $seo->forPageSlug('privacy', 'Privacy Policy — Borendra International'),
+            'seo' => $seo->forPageSlug('privacy', 'Privacy Policy'),
         ]);
     }
 
@@ -22,7 +22,7 @@ class LegalController extends Controller
     {
         return Inertia::render('terms', [
             'page' => Page::where('slug', 'terms')->first(),
-            'seo' => $seo->forPageSlug('terms', 'Terms of Service — Borendra International'),
+            'seo' => $seo->forPageSlug('terms', 'Terms of Service'),
         ]);
     }
 }

@@ -14,7 +14,7 @@ class GlobalReachController extends Controller
     {
         return Inertia::render('global-reach', [
             'markets' => GlobalMarket::where('status', 'published')->orderBy('display_order')->get(),
-            'seo' => $seo->forTitle('Global Reach — Borendra International'),
+            'seo' => $seo->forTitle('Global Reach'),
         ]);
     }
 }

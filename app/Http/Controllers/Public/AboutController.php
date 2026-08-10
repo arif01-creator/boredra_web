@@ -16,7 +16,7 @@ class AboutController extends Controller
         return Inertia::render('about', [
             'about' => Page::where('slug', 'about')->first(),
             'stats' => CompanyStat::where('status', 'published')->orderBy('sort_order')->get(),
-            'seo' => $seo->forPageSlug('about', 'About Borendra International'),
+            'seo' => $seo->forPageSlug('about', 'About'),
         ]);
     }
 }

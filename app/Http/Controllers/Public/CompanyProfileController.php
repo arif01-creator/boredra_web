@@ -20,7 +20,7 @@ class CompanyProfileController extends Controller
                 'company_phone' => $settings->get('company_phone'),
                 'company_profile_pdf' => $settings->get('company_profile_pdf'),
             ],
-            'seo' => $seo->forPageSlug('company-profile', 'Company Profile — Borendra International', 'Registered exporting company based in Dakshinkhan, Dhaka, Bangladesh.'),
+            'seo' => $seo->forPageSlug('company-profile', 'Company Profile', 'Registered exporting company based in Dakshinkhan, Dhaka, Bangladesh.'),
         ]);
     }
 }

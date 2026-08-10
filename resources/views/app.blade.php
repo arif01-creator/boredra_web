@@ -1,6 +1,7 @@
 @php
     $seo = $page['props']['seo'] ?? [];
-    $title = $seo['title'] ?? config('app.name');
+    $rawTitle = $seo['title'] ?? null;
+    $title = $rawTitle ? "{$rawTitle} | ".config('app.name') : config('app.name');
     $description = $seo['description'] ?? 'Borendra International is a Bangladesh-based registered exporting company supplying human hair, dressed hair, animal hair and synthetic materials for the global wig and hair industry.';
     $canonical = $seo['canonical'] ?? url()->current();
     $ogImage = $seo['ogImage'] ?? null;
@@ -20,7 +21,7 @@
 
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="{{ config('app.name') }}">
-        <meta property="og:title" content="{{ $seo['ogTitle'] ?? $title }}">
+        <meta property="og:title" content="{{ $seo['ogTitle'] ?? $rawTitle ?? $title }}">
         <meta property="og:description" content="{{ $seo['ogDescription'] ?? $description }}">
         <meta property="og:url" content="{{ $canonical }}">
         @if ($ogImage)
@@ -28,7 +29,7 @@
         @endif
 
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ $seo['ogTitle'] ?? $title }}">
+        <meta name="twitter:title" content="{{ $seo['ogTitle'] ?? $rawTitle ?? $title }}">
         <meta name="twitter:description" content="{{ $seo['ogDescription'] ?? $description }}">
         @if ($ogImage)
             <meta name="twitter:image" content="{{ $ogImage }}">

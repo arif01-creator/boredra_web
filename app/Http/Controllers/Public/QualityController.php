@@ -14,7 +14,7 @@ class QualityController extends Controller
     {
         return Inertia::render('quality', [
             'stages' => QualityProcess::where('status', 'published')->orderBy('sort_order')->get(),
-            'seo' => $seo->forTitle('Quality & Process — Borendra International'),
+            'seo' => $seo->forTitle('Quality & Process'),
         ]);
     }
 }

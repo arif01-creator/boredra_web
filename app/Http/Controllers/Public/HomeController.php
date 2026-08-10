@@ -34,7 +34,7 @@ class HomeController extends Controller
                 ]
                 : null,
             'seo' => $seo->forTitle(
-                'Borendra International — Exceptional Materials. Global Possibilities.',
+                'Exceptional Materials. Global Possibilities.',
                 null,
                 [$seo->websiteSchema()],
             ),

@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'slug' => 'about',
-                'title' => 'About Borendra International',
+                'title' => 'About',
                 'sections' => [
                     'heading' => "Built on Quality.\nDriven by Trust.",
                     'body' => 'Borendra International is a registered exporting company based in Dakshinkhan, Dhaka, Bangladesh. We work with international partners across the wig and hair-product industry, supplying human hair, dressed hair, animal hair and synthetic materials.',
