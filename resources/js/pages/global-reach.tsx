@@ -2,6 +2,7 @@ import { Cta } from '@/components/cta';
 import { GlobalMap } from '@/components/global-map';
 import { Reveal } from '@/components/reveal';
 import { Section } from '@/components/section';
+import { useTranslations } from '@/lib/locale';
 import type { GlobalMarket } from '@/types/models';
 
 type GlobalReachProps = {
@@ -9,14 +10,16 @@ type GlobalReachProps = {
 };
 
 export default function GlobalReach({ markets }: GlobalReachProps) {
+    const t = useTranslations();
+
     return (
         <>
             <Section tone="forest" className="pt-44 pb-16">
-                <p className="label-micro text-gold">Global Reach</p>
+                <p className="label-micro text-gold">{t('globalReachPage.label')}</p>
                 <h1 className="mt-6 max-w-3xl text-[clamp(2.5rem,6vw,5rem)] leading-[1.02] font-serif text-ivory">
-                    From Bangladesh
+                    {t('globalReachPage.heading1')}
                     <br />
-                    to Global Markets.
+                    {t('globalReachPage.heading2')}
                 </h1>
             </Section>
 
@@ -26,7 +29,7 @@ export default function GlobalReach({ markets }: GlobalReachProps) {
                 </Reveal>
 
                 {markets.length === 0 ? (
-                    <p className="mt-8 text-sm text-moss">Export destinations will appear here as they are confirmed and added via Admin.</p>
+                    <p className="mt-8 text-sm text-moss">{t('common.emptyDestinations')}</p>
                 ) : (
                     <div className="mt-16 grid grid-cols-1 gap-8 border-t border-stone pt-10 sm:grid-cols-2 lg:grid-cols-3">
                         {markets.map((market) => (
@@ -40,8 +43,8 @@ export default function GlobalReach({ markets }: GlobalReachProps) {
             </Section>
 
             <Cta
-                heading={'Looking to\nsource from Bangladesh?'}
-                actionLabel="Send Inquiry"
+                heading={t('globalReachPage.ctaHeading')}
+                actionLabel={t('common.sendInquiry')}
                 actionHref="/contact"
             />
         </>

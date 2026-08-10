@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ensureGsap, prefersReducedMotion } from '@/lib/gsap';
+import { useTranslations } from '@/lib/locale';
 import type { GlobalMarket } from '@/types/models';
 
 type GlobalMapProps = {
@@ -25,6 +26,7 @@ function arcPath(from: { x: number; y: number }, to: { x: number; y: number }) {
 }
 
 export function GlobalMap({ markets }: GlobalMapProps) {
+    const t = useTranslations();
     const svgRef = useRef<SVGSVGElement>(null);
     const origin = project(ORIGIN.lat, ORIGIN.lng);
     const reduced = prefersReducedMotion();
@@ -89,7 +91,7 @@ gridRows.push((i * HEIGHT) / 6);
 }
 
     return (
-        <svg ref={svgRef} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="h-auto w-full" role="img" aria-label="Map of export destinations from Bangladesh">
+        <svg ref={svgRef} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="h-auto w-full" role="img" aria-label={t('globalMap.ariaLabel')}>
             {gridLines.map((x) => (
                 <line key={`v-${x}`} x1={x} y1={0} x2={x} y2={HEIGHT} stroke="currentColor" className="text-sage/15" strokeWidth={1} />
             ))}
@@ -120,7 +122,7 @@ gridRows.push((i * HEIGHT) / 6);
             <circle cx={origin.x} cy={origin.y} r={6} className="fill-forest-deep" />
             <circle cx={origin.x} cy={origin.y} r={10} className="fill-none stroke-forest-deep" strokeWidth={1} opacity={0.4} />
             <text x={origin.x + 12} y={origin.y + 4} className="fill-forest-deep text-xs font-medium tracking-wide">
-                Bangladesh
+                {t('common.bangladesh')}
             </text>
         </svg>
     );

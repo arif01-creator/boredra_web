@@ -5,6 +5,7 @@ import { MagneticButton } from '@/components/magnetic-button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useLocale, useTranslations, withLocale } from '@/lib/locale';
 
 type InquiryFormProps = {
     productOptions?: string[];
@@ -24,6 +25,8 @@ type InquiryFormData = {
 };
 
 export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryFormProps) {
+    const t = useTranslations();
+    const locale = useLocale();
     const { data, setData, post, processing, errors, wasSuccessful, reset } = useForm<InquiryFormData>({
         name: '',
         company: '',
@@ -38,7 +41,7 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        post('/contact', {
+        post(withLocale(locale, '/contact'), {
             preserveScroll: true,
             onSuccess: () => reset('name', 'company', 'email', 'phone', 'country', 'product_interest', 'quantity', 'message'),
         });
@@ -55,8 +58,8 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
             <div className="flex items-start gap-3 rounded border border-gold/30 bg-gold/10 px-6 py-8">
                 <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-gold" />
                 <div>
-                    <p className={isDark ? 'text-ivory' : 'text-charcoal'}>Thank you — your inquiry has been received.</p>
-                    <p className={`mt-1 text-sm ${labelClass}`}>Our team will respond as soon as possible.</p>
+                    <p className={isDark ? 'text-ivory' : 'text-charcoal'}>{t('form.thankYouTitle')}</p>
+                    <p className={`mt-1 text-sm ${labelClass}`}>{t('form.thankYouBody')}</p>
                 </div>
             </div>
         );
@@ -79,7 +82,7 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div className="space-y-2">
                     <Label htmlFor="name" className={labelClass}>
-                        Name *
+                        {t('form.name')}
                     </Label>
                     <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} className={inputClass} required />
                     {errors.name && <p className="text-xs text-red-400">{errors.name}</p>}
@@ -87,14 +90,14 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
 
                 <div className="space-y-2">
                     <Label htmlFor="company" className={labelClass}>
-                        Company
+                        {t('form.company')}
                     </Label>
                     <Input id="company" value={data.company} onChange={(e) => setData('company', e.target.value)} className={inputClass} />
                 </div>
 
                 <div className="space-y-2">
                     <Label htmlFor="email" className={labelClass}>
-                        Email *
+                        {t('form.email')}
                     </Label>
                     <Input id="email" type="email" value={data.email} onChange={(e) => setData('email', e.target.value)} className={inputClass} required />
                     {errors.email && <p className="text-xs text-red-400">{errors.email}</p>}
@@ -102,25 +105,25 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
 
                 <div className="space-y-2">
                     <Label htmlFor="phone" className={labelClass}>
-                        Phone
+                        {t('form.phone')}
                     </Label>
                     <Input id="phone" value={data.phone} onChange={(e) => setData('phone', e.target.value)} className={inputClass} />
                 </div>
 
                 <div className="space-y-2">
                     <Label htmlFor="country" className={labelClass}>
-                        Country
+                        {t('form.country')}
                     </Label>
                     <Input id="country" value={data.country} onChange={(e) => setData('country', e.target.value)} className={inputClass} />
                 </div>
 
                 <div className="space-y-2">
                     <Label htmlFor="product_interest" className={labelClass}>
-                        Product Interest
+                        {t('form.productInterest')}
                     </Label>
                     <Select value={data.product_interest} onValueChange={(value) => setData('product_interest', value)}>
                         <SelectTrigger id="product_interest" className={inputClass}>
-                            <SelectValue placeholder="Select a material" />
+                            <SelectValue placeholder={t('form.selectMaterial')} />
                         </SelectTrigger>
                         <SelectContent>
                             {productOptions.map((option) => (
@@ -135,14 +138,14 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
 
             <div className="space-y-2">
                 <Label htmlFor="quantity" className={labelClass}>
-                    Quantity / Requirement
+                    {t('form.quantity')}
                 </Label>
                 <Input id="quantity" value={data.quantity} onChange={(e) => setData('quantity', e.target.value)} className={inputClass} />
             </div>
 
             <div className="space-y-2">
                 <Label htmlFor="message" className={labelClass}>
-                    Message *
+                    {t('form.message')}
                 </Label>
                 <textarea
                     id="message"
@@ -156,7 +159,7 @@ export function InquiryForm({ productOptions = [], tone = 'light' }: InquiryForm
             </div>
 
             <MagneticButton type="submit" disabled={processing} variant={isDark ? 'solid' : 'dark'}>
-                {processing ? 'Sending…' : 'Send Inquiry →'}
+                {processing ? t('form.sending') : t('form.sendInquiry')}
             </MagneticButton>
         </form>
     );

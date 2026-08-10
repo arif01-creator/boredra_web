@@ -1,6 +1,7 @@
 import { Cta } from '@/components/cta';
 import { QualityTimeline } from '@/components/quality-timeline';
 import { Section } from '@/components/section';
+import { useTranslations } from '@/lib/locale';
 import type { QualityStage } from '@/types/models';
 
 type QualityProps = {
@@ -8,21 +9,24 @@ type QualityProps = {
 };
 
 export default function Quality({ stages }: QualityProps) {
+    const t = useTranslations();
+
     return (
         <>
             <Section tone="forest" className="pt-44 pb-20">
-                <p className="label-micro text-gold">Quality &amp; Process</p>
+                <p className="label-micro text-gold">{t('qualityPage.label')}</p>
                 <h1 className="mt-6 max-w-2xl text-[clamp(2.5rem,6vw,5rem)] leading-[1.02] font-serif text-ivory">
-                    Quality is
-                    <br />a process.
+                    {t('qualityPage.heading1')}
+                    <br />
+                    {t('qualityPage.heading2')}
                 </h1>
             </Section>
 
             <QualityTimeline stages={stages} />
 
             <Cta
-                heading={'Questions about\nour process?'}
-                actionLabel="Contact Us"
+                heading={t('qualityPage.ctaHeading')}
+                actionLabel={t('common.contactUs')}
                 actionHref="/contact"
             />
         </>

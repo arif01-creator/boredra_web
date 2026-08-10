@@ -3,6 +3,7 @@ import type {InertiaLinkProps} from '@inertiajs/react';
 import { useRef  } from 'react';
 import type {ReactNode} from 'react';
 import { ensureGsap, isTouchDevice, prefersReducedMotion } from '@/lib/gsap';
+import { useLocale, withLocale } from '@/lib/locale';
 import { cn } from '@/lib/utils';
 
 type MagneticButtonProps = {
@@ -24,6 +25,8 @@ const variants: Record<NonNullable<MagneticButtonProps['variant']>, string> = {
 
 export function MagneticButton({ href, onClick, type = 'button', variant = 'solid', className, children, disabled }: MagneticButtonProps) {
     const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
+    const locale = useLocale();
+    const resolvedHref = typeof href === 'string' ? withLocale(locale, href) : href;
 
     function handleMouseMove(event: React.MouseEvent) {
         if (isTouchDevice() || prefersReducedMotion()) {
@@ -64,11 +67,11 @@ return;
 
     const content = <span className="inline-flex items-center gap-2">{children}</span>;
 
-    if (href) {
+    if (resolvedHref) {
         return (
             <Link
                 ref={ref}
-                href={href}
+                href={resolvedHref}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 className={classes}

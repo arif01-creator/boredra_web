@@ -40,6 +40,10 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'settings' => fn () => app(SettingsService::class)->all(),
+            // Read the route parameter directly rather than app()->getLocale():
+            // this global middleware runs before the route-scoped SetLocale
+            // middleware, so App::setLocale() hasn't been applied yet here.
+            'locale' => $request->route('locale') ?? app()->getLocale(),
         ];
     }
 }

@@ -5,6 +5,7 @@ declare module '@inertiajs/core' {
         sharedPageProps: {
             name: string;
             settings: SiteSettings;
+            locale: string;
             [key: string]: unknown;
         };
     }

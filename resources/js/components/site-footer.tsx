@@ -1,19 +1,22 @@
-import { Link, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
+import { AppLink } from '@/components/app-link';
+import { useTranslations } from '@/lib/locale';
 import type { SiteSettings } from '@/types/models';
 
-const NAV = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Products', href: '/products' },
-    { label: 'Quality', href: '/quality' },
-    { label: 'Global Reach', href: '/global-reach' },
-    { label: 'Company Profile', href: '/company-profile' },
-    { label: 'Contact', href: '/contact' },
-];
-
 export function SiteFooter() {
+    const t = useTranslations();
     const { settings } = usePage<{ settings: SiteSettings }>().props;
     const year = new Date().getFullYear();
+
+    const NAV = [
+        { label: t('nav.home'), href: '/' },
+        { label: t('nav.about'), href: '/about' },
+        { label: t('nav.products'), href: '/products' },
+        { label: t('nav.quality'), href: '/quality' },
+        { label: t('nav.globalReach'), href: '/global-reach' },
+        { label: t('nav.companyProfile'), href: '/company-profile' },
+        { label: t('nav.contact'), href: '/contact' },
+    ];
 
     const socials = [
         { label: 'Facebook', href: settings?.social_facebook },
@@ -27,29 +30,26 @@ export function SiteFooter() {
                 <div>
                     <p className="text-sm font-medium tracking-[0.25em] uppercase">Borendra</p>
                     <p className="text-[10px] tracking-[0.3em] text-sage-soft uppercase">International</p>
-                    <p className="mt-5 max-w-xs text-sm leading-relaxed text-sage-soft">
-                        A registered exporting company based in Dakshinkhan, Dhaka, Bangladesh, supplying human hair, dressed hair,
-                        animal hair and synthetic materials to the global wig and hair-product industry.
-                    </p>
+                    <p className="mt-5 max-w-xs text-sm leading-relaxed text-sage-soft">{t('footer.description')}</p>
                 </div>
 
                 <div>
-                    <p className="label-micro mb-5 text-sage-soft">Navigate</p>
+                    <p className="label-micro mb-5 text-sage-soft">{t('footer.navigate')}</p>
                     <ul className="space-y-2.5 text-sm">
                         {NAV.map((item) => (
                             <li key={item.href}>
-                                <Link href={item.href} className="text-ivory/85 transition-colors hover:text-gold">
+                                <AppLink href={item.href} className="text-ivory/85 transition-colors hover:text-gold">
                                     {item.label}
-                                </Link>
+                                </AppLink>
                             </li>
                         ))}
                     </ul>
                 </div>
 
                 <div>
-                    <p className="label-micro mb-5 text-sage-soft">Contact</p>
+                    <p className="label-micro mb-5 text-sage-soft">{t('footer.contact')}</p>
                     <ul className="space-y-2.5 text-sm text-ivory/85">
-                        <li>{settings?.company_address ?? 'Dakshinkhan, Dhaka, Bangladesh'}</li>
+                        <li>{settings?.company_address ?? t('common.dhakaBangladesh')}</li>
                         {settings?.company_phone && <li>{settings.company_phone}</li>}
                         {settings?.company_email && (
                             <li>
@@ -62,17 +62,17 @@ export function SiteFooter() {
                 </div>
 
                 <div>
-                    <p className="label-micro mb-5 text-sage-soft">Legal</p>
+                    <p className="label-micro mb-5 text-sage-soft">{t('footer.legal')}</p>
                     <ul className="space-y-2.5 text-sm">
                         <li>
-                            <Link href="/privacy" className="text-ivory/85 hover:text-gold">
-                                Privacy Policy
-                            </Link>
+                            <AppLink href="/privacy" className="text-ivory/85 hover:text-gold">
+                                {t('footer.privacy')}
+                            </AppLink>
                         </li>
                         <li>
-                            <Link href="/terms" className="text-ivory/85 hover:text-gold">
-                                Terms
-                            </Link>
+                            <AppLink href="/terms" className="text-ivory/85 hover:text-gold">
+                                {t('footer.terms')}
+                            </AppLink>
                         </li>
                     </ul>
 
@@ -90,8 +90,10 @@ export function SiteFooter() {
 
             <div className="border-t border-ivory/10">
                 <div className="container-editorial flex flex-col items-center justify-between gap-2 py-6 text-xs text-sage-soft sm:flex-row">
-                    <p>© {year} Borendra International. All Rights Reserved.</p>
-                    <p>Dakshinkhan, Dhaka, Bangladesh</p>
+                    <p>
+                        © {year} Borendra International. {t('footer.rights')}
+                    </p>
+                    <p>{t('common.dhakaBangladesh')}</p>
                 </div>
             </div>
         </footer>

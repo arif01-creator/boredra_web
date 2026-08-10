@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImagePlaceholder } from '@/components/image-placeholder';
 import { ensureGsap, prefersReducedMotion } from '@/lib/gsap';
+import { useTranslations } from '@/lib/locale';
 import { cn } from '@/lib/utils';
 import type { QualityStage } from '@/types/models';
 
@@ -17,6 +18,7 @@ type QualityTimelineProps = {
  * ScrollTrigger here is only ever used to *read* scroll progress.
  */
 export function QualityTimeline({ stages }: QualityTimelineProps) {
+    const t = useTranslations();
     const wrapperRef = useRef<HTMLDivElement>(null);
     const [active, setActive] = useState(0);
     const [progress, setProgress] = useState(0);
@@ -56,7 +58,7 @@ export function QualityTimeline({ stages }: QualityTimelineProps) {
             <div className="sticky top-0 flex h-screen items-center">
                 <div className="container-editorial grid w-full grid-cols-1 gap-14 py-20 lg:grid-cols-2 lg:gap-20">
                     <div>
-                        <p className="label-micro mb-8 text-gold">Quality Is A Process</p>
+                        <p className="label-micro mb-8 text-gold">{t('quality.label')}</p>
 
                         <div className="relative pl-8">
                             <div className="absolute top-0 bottom-0 left-0 w-px bg-ivory/15">

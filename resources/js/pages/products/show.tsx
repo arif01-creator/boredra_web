@@ -5,6 +5,7 @@ import { ImageReveal } from '@/components/image-reveal';
 import { ProductShowcase } from '@/components/product-showcase';
 import { Reveal } from '@/components/reveal';
 import { Section } from '@/components/section';
+import { useTranslations } from '@/lib/locale';
 import type { Product } from '@/types/models';
 
 type ProductShowProps = {
@@ -13,6 +14,7 @@ type ProductShowProps = {
 };
 
 export default function ProductShow({ product, related }: ProductShowProps) {
+    const t = useTranslations();
     const specs = Object.entries(product.specifications ?? {}).filter(([, value]) => Boolean(value));
     const applications = product.applications ?? [];
 
@@ -21,7 +23,7 @@ export default function ProductShow({ product, related }: ProductShowProps) {
             <Section tone="forest" className="pt-40 pb-16">
                 <Breadcrumbs
                     breadcrumbs={[
-                        { title: 'Products', href: '/products' },
+                        { title: t('products.breadcrumb'), href: '/products' },
                         { title: product.name },
                     ]}
                 />
@@ -36,14 +38,14 @@ export default function ProductShow({ product, related }: ProductShowProps) {
                     </ImageReveal>
 
                     <div>
-                        <p className="label-micro text-moss">Overview</p>
+                        <p className="label-micro text-moss">{t('products.overview')}</p>
                         <Reveal as="p" className="mt-4 text-base leading-relaxed text-charcoal sm:text-lg">
                             {product.long_description ?? product.short_description}
                         </Reveal>
 
                         {applications.length > 0 && (
                             <div className="mt-10 border-t border-stone pt-8">
-                                <p className="label-micro text-moss">Applications</p>
+                                <p className="label-micro text-moss">{t('products.applications')}</p>
                                 <ul className="mt-4 space-y-2 text-sm text-charcoal">
                                     {applications.map((item) => (
                                         <li key={item}>— {item}</li>
@@ -54,7 +56,7 @@ export default function ProductShow({ product, related }: ProductShowProps) {
 
                         {specs.length > 0 && (
                             <div className="mt-10 border-t border-stone pt-8">
-                                <p className="label-micro text-moss">Specifications</p>
+                                <p className="label-micro text-moss">{t('products.specifications')}</p>
                                 <dl className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                                     {specs.map(([key, value]) => (
                                         <div key={key}>
@@ -80,15 +82,15 @@ export default function ProductShow({ product, related }: ProductShowProps) {
             </Section>
 
             <Cta
-                heading={`Interested in\n${product.name}?`}
-                description="Share your requirements and our team will confirm availability and specifications."
-                actionLabel="Send Inquiry"
+                heading={`${t('products.interestedIn')}\n${product.name}?`}
+                description={t('products.ctaDescription')}
+                actionLabel={t('common.sendInquiry')}
                 actionHref="/contact"
             />
 
             {related.length > 0 && (
                 <Section tone="white">
-                    <p className="label-micro text-moss">Related Materials</p>
+                    <p className="label-micro text-moss">{t('products.relatedMaterials')}</p>
                     <div className="mt-6">
                         <ProductShowcase products={related} />
                     </div>

@@ -10,7 +10,7 @@ use Inertia\Response;
 
 class ProductController extends Controller
 {
-    public function index(SeoService $seo): Response
+    public function index(string $locale, SeoService $seo): Response
     {
         return Inertia::render('products/index', [
             'products' => Product::with('category')->where('status', 'published')->orderBy('sort_order')->get(),
@@ -18,7 +18,15 @@ class ProductController extends Controller
         ]);
     }
 
-    public function show(Product $product, SeoService $seo): Response
+    /**
+     * The leading $locale parameter keeps positional argument resolution
+     * correct: Laravel's ControllerDispatcher resolves method arguments by
+     * position once any container-injected dependency is spliced in, and
+     * with an extra unconsumed {locale} route segment ahead of {product}
+     * it would otherwise bind $product to the locale string instead of the
+     * model. See ResolvesRouteDependencies::resolveMethodDependencies().
+     */
+    public function show(string $locale, Product $product, SeoService $seo): Response
     {
         abort_unless($product->status === 'published', 404);
 

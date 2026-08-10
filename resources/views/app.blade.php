@@ -7,6 +7,9 @@
     $ogImage = $seo['ogImage'] ?? null;
     $jsonLd = $seo['jsonLd'] ?? [];
     $robots = $seo['robots'] ?? 'index, follow';
+
+    $pathSegments = explode('/', trim(request()->path(), '/'));
+    $pathWithoutLocale = implode('/', array_slice($pathSegments, 1));
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -18,6 +21,11 @@
 
         <meta name="description" content="{{ $description }}">
         <link rel="canonical" href="{{ $canonical }}">
+
+        @foreach (\App\Http\Middleware\SetLocale::SUPPORTED as $altLocale)
+            <link rel="alternate" hreflang="{{ $altLocale }}" href="{{ url('/'.$altLocale.($pathWithoutLocale ? '/'.$pathWithoutLocale : '')) }}">
+        @endforeach
+        <link rel="alternate" hreflang="x-default" href="{{ url('/en'.($pathWithoutLocale ? '/'.$pathWithoutLocale : '')) }}">
 
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="{{ config('app.name') }}">

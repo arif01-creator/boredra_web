@@ -1,6 +1,7 @@
 import { MagneticButton } from '@/components/magnetic-button';
 import { Section } from '@/components/section';
 import { SectionHeading } from '@/components/section-heading';
+import { useTranslations } from '@/lib/locale';
 
 type CtaProps = {
     label?: string;
@@ -10,11 +11,13 @@ type CtaProps = {
     actionHref: string;
 };
 
-export function Cta({ label = 'GET IN TOUCH', heading, description, actionLabel, actionHref }: CtaProps) {
+export function Cta({ label, heading, description, actionLabel, actionHref }: CtaProps) {
+    const t = useTranslations();
+
     return (
         <Section tone="forest">
             <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-end">
-                <SectionHeading label={label} heading={heading} description={description} tone="light" className="max-w-xl" />
+                <SectionHeading label={label ?? t('common.getInTouch')} heading={heading} description={description} tone="light" className="max-w-xl" />
                 <MagneticButton href={actionHref} variant="solid">
                     {actionLabel} →
                 </MagneticButton>

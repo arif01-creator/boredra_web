@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { AppLink } from '@/components/app-link';
 import { Cta } from '@/components/cta';
 import { GlobalMap } from '@/components/global-map';
 import { Hero } from '@/components/hero';
@@ -10,6 +10,7 @@ import { Reveal } from '@/components/reveal';
 import { Section } from '@/components/section';
 import { SectionHeading } from '@/components/section-heading';
 import { Stats } from '@/components/stats';
+import { useTranslations } from '@/lib/locale';
 import type { CompanyStat, GlobalMarket, PageContent, Product, QualityStage, ResponsibilityItem } from '@/types/models';
 
 type HomeProps = {
@@ -24,6 +25,8 @@ type HomeProps = {
 };
 
 export default function Home({ heroImage, intro, about, products, qualityStages, markets, stats, responsibility }: HomeProps) {
+    const t = useTranslations();
+
     return (
         <>
             <Hero image={heroImage} />
@@ -31,7 +34,7 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
             <Section id="introduction" tone="white">
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
                     <div className="lg:col-span-5">
-                        <SectionHeading label={intro?.sections.label ?? 'WHO WE ARE'} heading={intro?.sections.heading ?? 'A trusted connection\nbetween quality materials\nand global markets.'} />
+                        <SectionHeading label={intro?.sections.label ?? t('home.whoWeAre')} heading={intro?.sections.heading ?? 'A trusted connection\nbetween quality materials\nand global markets.'} />
                     </div>
                     <div className="lg:col-span-6 lg:col-start-7">
                         <Reveal as="p" delay={0.1} className="text-base leading-relaxed text-moss sm:text-lg">
@@ -40,16 +43,16 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
 
                         <Reveal delay={0.2} className="mt-10 grid grid-cols-1 gap-8 border-t border-stone pt-8 sm:grid-cols-3">
                             <div>
-                                <p className="label-micro text-gold">Based In</p>
-                                <p className="mt-2 text-sm text-charcoal">Dhaka, Bangladesh</p>
+                                <p className="label-micro text-gold">{t('home.basedIn')}</p>
+                                <p className="mt-2 text-sm text-charcoal">{t('common.dhakaBangladesh')}</p>
                             </div>
                             <div>
-                                <p className="label-micro text-gold">Focus</p>
-                                <p className="mt-2 text-sm text-charcoal">Hair &amp; Wig Materials</p>
+                                <p className="label-micro text-gold">{t('home.focus')}</p>
+                                <p className="mt-2 text-sm text-charcoal">{t('home.focusValue')}</p>
                             </div>
                             <div>
-                                <p className="label-micro text-gold">Market</p>
-                                <p className="mt-2 text-sm text-charcoal">International B2B</p>
+                                <p className="label-micro text-gold">{t('home.market')}</p>
+                                <p className="mt-2 text-sm text-charcoal">{t('home.marketValue')}</p>
                             </div>
                         </Reveal>
                     </div>
@@ -59,23 +62,23 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
             <Section tone="ivory">
                 <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-2 lg:gap-20">
                     <ImageReveal className="aspect-[4/5] w-full rounded-sm">
-                        <ImagePlaceholder src={null} alt="Borendra International craftsmanship" />
+                        <ImagePlaceholder src={null} alt={t('placeholder.craftsmanship')} />
                     </ImageReveal>
 
                     <div>
-                        <SectionHeading label="ABOUT" heading={about?.sections.heading ?? 'Built on Quality.\nDriven by Trust.'} description={about?.sections.body} />
+                        <SectionHeading label={t('home.aboutLabel')} heading={about?.sections.heading ?? 'Built on Quality.\nDriven by Trust.'} description={about?.sections.body} />
                         <Reveal delay={0.25} className="mt-8">
-                            <Link href="/about" className="group inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] text-forest-deep uppercase">
-                                Discover Borendra International
+                            <AppLink href="/about" className="group inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] text-forest-deep uppercase">
+                                {t('common.discoverCompany')}
                                 <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-                            </Link>
+                            </AppLink>
                         </Reveal>
                     </div>
                 </div>
             </Section>
 
             <Section tone="white" className="!pb-0">
-                <SectionHeading label="OUR MATERIALS" heading={'Materials chosen\nfor their character.'} />
+                <SectionHeading label={t('home.materialsLabel')} heading={t('home.materialsHeading')} />
             </Section>
             <div className="container-editorial pb-24 sm:pb-28 lg:pb-36">
                 <ProductShowcase products={products} />
@@ -84,12 +87,12 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
             <QualityTimeline stages={qualityStages} />
 
             <Section tone="white">
-                <SectionHeading label="FROM BANGLADESH TO GLOBAL MARKETS" heading={'From Bangladesh\nto Global Markets.'} />
+                <SectionHeading label={t('home.globalReachLabel')} heading={t('home.globalReachHeading')} />
                 <Reveal delay={0.2} className="mt-14">
                     <GlobalMap markets={markets} />
                 </Reveal>
                 {markets.length === 0 && (
-                    <p className="mt-6 text-sm text-moss">Export destinations will appear here as they are confirmed and added via Admin.</p>
+                    <p className="mt-6 text-sm text-moss">{t('common.emptyDestinations')}</p>
                 )}
             </Section>
 
@@ -101,7 +104,7 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
 
             {responsibility && (
                 <Section tone="white">
-                    <SectionHeading label="RESPONSIBLE" heading={responsibility.page?.sections.heading ?? 'Responsible\nby Approach.'} />
+                    <SectionHeading label={t('home.responsibleLabel')} heading={responsibility.page?.sections.heading ?? 'Responsible\nby Approach.'} />
                     <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
                         {responsibility.items.map((item, index) => (
                             <Reveal key={item.id} delay={index * 0.06}>
@@ -115,9 +118,9 @@ export default function Home({ heroImage, intro, about, products, qualityStages,
             )}
 
             <Cta
-                heading={"Let's Build\na Global Connection."}
-                description="Share your requirements and our team will respond with the information you need."
-                actionLabel="Send Inquiry"
+                heading={t('home.ctaHeading')}
+                description={t('home.ctaDescription')}
+                actionLabel={t('common.sendInquiry')}
                 actionHref="/contact"
             />
         </>

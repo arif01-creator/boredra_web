@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Notification;
 test('a visitor can submit a valid inquiry', function () {
     Notification::fake();
 
-    $response = $this->post('/contact', [
+    $response = $this->post('/en/contact', [
         'name' => 'Jane Buyer',
         'email' => 'jane@buyer-co.com',
         'message' => 'Interested in a sample order.',
@@ -21,14 +21,14 @@ test('a visitor can submit a valid inquiry', function () {
 });
 
 test('an inquiry requires name, email and message', function () {
-    $response = $this->post('/contact', []);
+    $response = $this->post('/en/contact', []);
 
     $response->assertSessionHasErrors(['name', 'email', 'message']);
     expect(Inquiry::count())->toBe(0);
 });
 
 test('the honeypot field silently rejects bot submissions', function () {
-    $response = $this->post('/contact', [
+    $response = $this->post('/en/contact', [
         'name' => 'Bot',
         'email' => 'bot@example.com',
         'message' => 'Spam',

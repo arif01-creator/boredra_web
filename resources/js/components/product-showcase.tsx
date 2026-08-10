@@ -1,7 +1,8 @@
-import { Link } from '@inertiajs/react';
+import { AppLink } from '@/components/app-link';
 import { ImagePlaceholder } from '@/components/image-placeholder';
 import { ImageReveal } from '@/components/image-reveal';
 import { Reveal } from '@/components/reveal';
+import { useTranslations } from '@/lib/locale';
 import { cn } from '@/lib/utils';
 import type { Product } from '@/types/models';
 
@@ -10,10 +11,12 @@ type ProductShowcaseProps = {
 };
 
 export function ProductShowcase({ products }: ProductShowcaseProps) {
+    const t = useTranslations();
+
     return (
         <div className="divide-y divide-stone">
             {products.map((product, index) => (
-                <Link
+                <AppLink
                     key={product.id}
                     href={`/products/${product.slug}`}
                     className={cn(
@@ -34,11 +37,11 @@ export function ProductShowcase({ products }: ProductShowcaseProps) {
                         </h3>
                         <p className="mt-4 max-w-md text-base leading-relaxed text-moss">{product.short_description}</p>
                         <span className="mt-7 inline-flex items-center gap-2 text-xs font-medium tracking-[0.15em] text-forest-deep uppercase">
-                            Explore
+                            {t('common.explore')}
                             <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
                         </span>
                     </Reveal>
-                </Link>
+                </AppLink>
             ))}
         </div>
     );
