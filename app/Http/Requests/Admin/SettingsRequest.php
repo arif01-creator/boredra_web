@@ -26,6 +26,7 @@ class SettingsRequest extends FormRequest
             'social_instagram' => ['nullable', 'url', 'max:255'],
             'responsibility_section_enabled' => ['nullable', 'boolean'],
             'company_profile_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+            'hero_media' => ['nullable', 'image', 'max:8192'],
         ];
     }
 }

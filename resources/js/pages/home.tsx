@@ -13,6 +13,7 @@ import { Stats } from '@/components/stats';
 import type { CompanyStat, GlobalMarket, PageContent, Product, QualityStage, ResponsibilityItem } from '@/types/models';
 
 type HomeProps = {
+    heroImage: string | null;
     intro: PageContent | null;
     about: PageContent | null;
     products: Product[];
@@ -22,10 +23,10 @@ type HomeProps = {
     responsibility: { page: PageContent | null; items: ResponsibilityItem[] } | null;
 };
 
-export default function Home({ intro, about, products, qualityStages, markets, stats, responsibility }: HomeProps) {
+export default function Home({ heroImage, intro, about, products, qualityStages, markets, stats, responsibility }: HomeProps) {
     return (
         <>
-            <Hero />
+            <Hero image={heroImage} />
 
             <Section id="introduction" tone="white">
                 <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">

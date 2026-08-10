@@ -8,26 +8,33 @@ type QualityTimelineProps = {
     stages: QualityStage[];
 };
 
+/**
+ * Uses CSS `position: sticky` (not GSAP's `pin: true`) for the pinned effect.
+ * GSAP's pin mechanism physically re-parents the DOM node into a spacer
+ * wrapper, which fights React's reconciler on unmount and crashes Inertia
+ * page transitions ("removeChild" on a node React no longer owns). Sticky
+ * gives the same visual result without touching the DOM tree, so
+ * ScrollTrigger here is only ever used to *read* scroll progress.
+ */
 export function QualityTimeline({ stages }: QualityTimelineProps) {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const [active, setActive] = useState(0);
     const [progress, setProgress] = useState(0);
     const reduced = prefersReducedMotion();
 
     useEffect(() => {
-        const el = containerRef.current;
+        const el = wrapperRef.current;
 
         if (!el || reduced || stages.length === 0) {
-return;
-}
+            return;
+        }
 
-        const { gsap, ScrollTrigger } = ensureGsap();
+        const { ScrollTrigger } = ensureGsap();
 
         const trigger = ScrollTrigger.create({
             trigger: el,
             start: 'top top',
-            end: `+=${stages.length * 420}`,
-            pin: true,
+            end: 'bottom bottom',
             scrub: 0.6,
             onUpdate: (self) => {
                 setProgress(self.progress);
@@ -37,60 +44,61 @@ return;
 
         return () => {
             trigger.kill();
-            gsap.set(el, { clearProps: 'all' });
         };
     }, [reduced, stages.length]);
 
     if (stages.length === 0) {
-return null;
-}
+        return null;
+    }
 
     return (
-        <div ref={containerRef} className="relative flex min-h-screen items-center overflow-hidden bg-forest-deep text-ivory">
-            <div className="container-editorial grid w-full grid-cols-1 gap-14 py-20 lg:grid-cols-2 lg:gap-20">
-                <div>
-                    <p className="label-micro mb-8 text-gold">Quality Is A Process</p>
+        <div ref={wrapperRef} className="relative bg-forest-deep text-ivory" style={{ height: `${stages.length * 100}vh` }}>
+            <div className="sticky top-0 flex h-screen items-center">
+                <div className="container-editorial grid w-full grid-cols-1 gap-14 py-20 lg:grid-cols-2 lg:gap-20">
+                    <div>
+                        <p className="label-micro mb-8 text-gold">Quality Is A Process</p>
 
-                    <div className="relative pl-8">
-                        <div className="absolute top-0 bottom-0 left-0 w-px bg-ivory/15">
-                            <div
-                                className="w-full bg-gold transition-[height] duration-150"
-                                style={{ height: `${(reduced ? 1 : progress) * 100}%` }}
-                            />
+                        <div className="relative pl-8">
+                            <div className="absolute top-0 bottom-0 left-0 w-px bg-ivory/15">
+                                <div
+                                    className="w-full bg-gold transition-[height] duration-150"
+                                    style={{ height: `${(reduced ? 1 : progress) * 100}%` }}
+                                />
+                            </div>
+
+                            <ol className="space-y-6">
+                                {stages.map((stage, index) => (
+                                    <li
+                                        key={stage.id}
+                                        className={cn(
+                                            'transition-colors duration-300',
+                                            index === active || reduced ? 'text-ivory' : 'text-ivory/35',
+                                        )}
+                                    >
+                                        <span className="label-micro mr-3 text-gold">{String(index + 1).padStart(2, '0')}</span>
+                                        <span className="text-xl font-serif sm:text-2xl">{stage.title}</span>
+                                        {(index === active || reduced) && stage.description && (
+                                            <p className="mt-2 max-w-md text-sm leading-relaxed text-sage-soft">{stage.description}</p>
+                                        )}
+                                    </li>
+                                ))}
+                            </ol>
                         </div>
-
-                        <ol className="space-y-6">
-                            {stages.map((stage, index) => (
-                                <li
-                                    key={stage.id}
-                                    className={cn(
-                                        'transition-colors duration-300',
-                                        index === active || reduced ? 'text-ivory' : 'text-ivory/35',
-                                    )}
-                                >
-                                    <span className="label-micro mr-3 text-gold">{String(index + 1).padStart(2, '0')}</span>
-                                    <span className="text-xl font-serif sm:text-2xl">{stage.title}</span>
-                                    {(index === active || reduced) && stage.description && (
-                                        <p className="mt-2 max-w-md text-sm leading-relaxed text-sage-soft">{stage.description}</p>
-                                    )}
-                                </li>
-                            ))}
-                        </ol>
                     </div>
-                </div>
 
-                <div className="relative aspect-[4/3] overflow-hidden rounded-sm lg:aspect-auto lg:h-[28rem]">
-                    {stages.map((stage, index) => (
-                        <div
-                            key={stage.id}
-                            className={cn(
-                                'absolute inset-0 transition-opacity duration-500',
-                                index === active || reduced ? 'opacity-100' : 'opacity-0',
-                            )}
-                        >
-                            <ImagePlaceholder src={stage.image} alt={stage.title} />
-                        </div>
-                    ))}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-sm lg:aspect-auto lg:h-[28rem]">
+                        {stages.map((stage, index) => (
+                            <div
+                                key={stage.id}
+                                className={cn(
+                                    'absolute inset-0 transition-opacity duration-500',
+                                    index === active || reduced ? 'opacity-100' : 'opacity-0',
+                                )}
+                            >
+                                <ImagePlaceholder src={stage.image} alt={stage.title} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

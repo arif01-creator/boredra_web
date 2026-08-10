@@ -35,6 +35,12 @@
         </div>
 
         <div class="space-y-5 rounded border border-stone bg-white p-6">
+            <p class="text-xs font-medium tracking-wide text-moss uppercase">Homepage Hero</p>
+            <x-admin.image-input name="hero_media" label="Hero Background Image" :current="$settings['hero_media'] ?? null" />
+            <p class="text-xs text-moss">Shown full-bleed behind the homepage hero heading. Recommended: a wide, high-resolution landscape image.</p>
+        </div>
+
+        <div class="space-y-5 rounded border border-stone bg-white p-6">
             <p class="text-xs font-medium tracking-wide text-moss uppercase">Company Profile</p>
             <div>
                 <label class="mb-1.5 block text-xs font-medium tracking-wide text-moss uppercase">Company Profile PDF</label>
