@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Concerns\SerializesCurrentLocale;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
-    use HasTranslations, SoftDeletes;
+    use HasTranslations, SerializesCurrentLocale, SoftDeletes;
 
     protected $fillable = [
         'product_category_id',

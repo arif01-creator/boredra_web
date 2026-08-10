@@ -1,6 +1,6 @@
 <div class="max-w-lg space-y-6">
-    <x-admin.input name="title" label="Title" required :value="$item->title ?? ''" />
-    <x-admin.textarea name="description" label="Description (verified detail only)" :value="$item->description ?? ''" rows="4" />
+    <x-admin.translatable-input name="title" label="Title" required :value="isset($item) ? $item->getTranslations('title') : []" />
+    <x-admin.translatable-textarea name="description" label="Description (verified detail only)" :value="isset($item) ? $item->getTranslations('description') : []" rows="4" />
     <x-admin.input name="icon" label="Icon key (optional)" :value="$item->icon ?? ''" />
 
     <x-admin.select name="status" label="Status" required

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\QualityProcessController;
 use App\Http\Controllers\Admin\ResponsibilityItemController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\TranslateController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -65,5 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('settings', [SettingsController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
+
+        Route::post('translate', TranslateController::class)->name('translate');
     });
 });

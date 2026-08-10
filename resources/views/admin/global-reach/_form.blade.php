@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
     <div class="space-y-6 lg:col-span-2">
-        <x-admin.input name="country" label="Country / Region" required :value="$market->country ?? ''" />
-        <x-admin.textarea name="description" label="Description" :value="$market->description ?? ''" rows="3" />
+        <x-admin.translatable-input name="country" label="Country / Region" required :value="isset($market) ? $market->getTranslations('country') : []" />
+        <x-admin.translatable-textarea name="description" label="Description" :value="isset($market) ? $market->getTranslations('description') : []" rows="3" />
 
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <x-admin.input name="latitude" label="Latitude" type="number" required :value="$market->latitude ?? ''" step="any" />

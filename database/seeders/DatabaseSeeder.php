@@ -98,14 +98,16 @@ class DatabaseSeeder extends Seeder
                     'short_description' => $item['short'],
                     'long_description' => $item['long'],
                     'specifications' => [
-                        'Material Type' => null,
-                        'Source' => null,
-                        'Processing' => null,
-                        'Texture' => null,
-                        'Available Forms' => null,
-                        'Packaging' => null,
+                        'en' => [
+                            'Material Type' => null,
+                            'Source' => null,
+                            'Processing' => null,
+                            'Texture' => null,
+                            'Available Forms' => null,
+                            'Packaging' => null,
+                        ],
                     ],
-                    'applications' => [],
+                    'applications' => ['en' => []],
                     'status' => 'published',
                     'sort_order' => $index,
                 ],
@@ -192,7 +194,7 @@ class DatabaseSeeder extends Seeder
         foreach ($pages as $page) {
             Page::updateOrCreate(['slug' => $page['slug']], [
                 'title' => $page['title'],
-                'sections' => $page['sections'],
+                'sections' => ['en' => $page['sections']],
             ]);
         }
     }

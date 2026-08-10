@@ -1,6 +1,6 @@
 <div class="max-w-lg space-y-6">
-    <x-admin.input name="label" label="Label" required :value="$stat->label ?? ''" />
-    <x-admin.input name="value" label="Value" required :value="$stat->value ?? ''" />
+    <x-admin.translatable-input name="label" label="Label" required :value="isset($stat) ? $stat->getTranslations('label') : []" />
+    <x-admin.translatable-input name="value" label="Value" required :value="isset($stat) ? $stat->getTranslations('value') : []" />
 
     <x-admin.select name="status" label="Status" required
         :options="['draft' => 'Draft', 'published' => 'Published']"

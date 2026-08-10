@@ -19,11 +19,11 @@
         @csrf
         @method('PUT')
 
-        <x-admin.input name="title" label="SEO Title" :value="$seo->title ?? ''" />
-        <x-admin.textarea name="meta_description" label="Meta Description" :value="$seo->meta_description ?? ''" rows="3" />
+        <x-admin.translatable-input name="title" label="SEO Title" :value="$seo?->getTranslations('title') ?? []" />
+        <x-admin.translatable-textarea name="meta_description" label="Meta Description" :value="$seo?->getTranslations('meta_description') ?? []" rows="3" />
         <x-admin.input name="canonical_url" label="Canonical URL" :value="$seo->canonical_url ?? ''" />
-        <x-admin.input name="og_title" label="OG Title" :value="$seo->og_title ?? ''" />
-        <x-admin.textarea name="og_description" label="OG Description" :value="$seo->og_description ?? ''" rows="2" />
+        <x-admin.translatable-input name="og_title" label="OG Title" :value="$seo?->getTranslations('og_title') ?? []" />
+        <x-admin.translatable-textarea name="og_description" label="OG Description" :value="$seo?->getTranslations('og_description') ?? []" rows="2" />
         <x-admin.input name="og_image" label="OG Image URL" :value="$seo->og_image ?? ''" />
         <x-admin.input name="robots" label="Robots" :value="$seo->robots ?? 'index, follow'" />
 

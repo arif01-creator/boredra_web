@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Concerns\SerializesCurrentLocale;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
-    use HasTranslations;
+    use HasTranslations, SerializesCurrentLocale;
 
     protected $fillable = [
         'slug',

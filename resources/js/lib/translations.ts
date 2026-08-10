@@ -45,6 +45,7 @@ const en = {
     'common.dhakaBangladesh': 'Dhaka, Bangladesh',
     'common.bangladesh': 'Bangladesh',
     'common.emptyDestinations': 'Export destinations will appear here as they are confirmed and added via Admin.',
+    'common.backToTop': 'Back to top',
 
     'quality.label': 'Quality Is A Process',
 
@@ -167,6 +168,7 @@ const bn: Record<TranslationKey, string> = {
     'common.dhakaBangladesh': 'ঢাকা, বাংলাদেশ',
     'common.bangladesh': 'বাংলাদেশ',
     'common.emptyDestinations': 'যাচাইকৃত রপ্তানি গন্তব্যগুলো অ্যাডমিন থেকে যুক্ত হওয়ার পর এখানে দেখা যাবে।',
+    'common.backToTop': 'উপরে ফিরুন',
 
     'quality.label': 'মান একটি প্রক্রিয়া',
 

@@ -1,6 +1,7 @@
 import { Head, usePage } from '@inertiajs/react';
 import { useEffect, useState  } from 'react';
 import type {ReactNode} from 'react';
+import { BackToTop } from '@/components/back-to-top';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { cn } from '@/lib/utils';
@@ -53,6 +54,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             <SiteHeader />
             <main>{children}</main>
             <SiteFooter />
+            <BackToTop />
         </div>
     );
 }

@@ -1,8 +1,8 @@
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
     <div class="space-y-6 lg:col-span-2">
-        <x-admin.input name="name" label="Name" required :value="$category->name ?? ''" />
+        <x-admin.translatable-input name="name" label="Name" required :value="isset($category) ? $category->getTranslations('name') : []" />
         <x-admin.input name="slug" label="Slug" required :value="$category->slug ?? ''" />
-        <x-admin.textarea name="description" label="Description" :value="$category->description ?? ''" rows="4" />
+        <x-admin.translatable-textarea name="description" label="Description" :value="isset($category) ? $category->getTranslations('description') : []" rows="4" />
     </div>
 
     <div class="space-y-6">

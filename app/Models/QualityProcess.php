@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Concerns\SerializesCurrentLocale;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 class QualityProcess extends Model
 {
-    use HasTranslations;
+    use HasTranslations, SerializesCurrentLocale;
 
     protected $fillable = [
         'title',
