@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CompanyStatRequest;
 use App\Models\CompanyStat;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class CompanyStatController extends Controller
 {
     public function index(): View
     {
-        return view('admin.company-stats.index');
+        return view('admin.company-stats.index', [
+            'stats' => CompanyStat::orderBy('sort_order')->get(),
+        ]);
     }
 
     public function create(): View
@@ -20,9 +22,11 @@ class CompanyStatController extends Controller
         return view('admin.company-stats.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(CompanyStatRequest $request): RedirectResponse
     {
-        return redirect()->route('admin.company-stats.index');
+        CompanyStat::create($request->validated());
+
+        return redirect()->route('admin.company-stats.index')->with('toast', ['type' => 'success', 'message' => 'Stat added.']);
     }
 
     public function edit(CompanyStat $companyStat): View
@@ -30,13 +34,17 @@ class CompanyStatController extends Controller
         return view('admin.company-stats.edit', ['stat' => $companyStat]);
     }
 
-    public function update(Request $request, CompanyStat $companyStat): RedirectResponse
+    public function update(CompanyStatRequest $request, CompanyStat $companyStat): RedirectResponse
     {
-        return redirect()->route('admin.company-stats.index');
+        $companyStat->update($request->validated());
+
+        return redirect()->route('admin.company-stats.index')->with('toast', ['type' => 'success', 'message' => 'Stat updated.']);
     }
 
     public function destroy(CompanyStat $companyStat): RedirectResponse
     {
-        return redirect()->route('admin.company-stats.index');
+        $companyStat->delete();
+
+        return redirect()->route('admin.company-stats.index')->with('toast', ['type' => 'success', 'message' => 'Stat removed.']);
     }
 }

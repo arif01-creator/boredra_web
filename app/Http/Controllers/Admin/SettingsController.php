@@ -3,19 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SettingsRequest;
+use App\Services\SettingsService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
-    public function edit(): View
+    public function edit(SettingsService $settings): View
     {
-        return view('admin.settings.edit');
+        return view('admin.settings.edit', ['settings' => $settings->all()]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(SettingsRequest $request, SettingsService $settings): RedirectResponse
     {
-        return redirect()->route('admin.settings.edit');
+        $data = $request->safe()->except('company_profile_pdf');
+        $data['responsibility_section_enabled'] = $request->boolean('responsibility_section_enabled') ? '1' : '0';
+
+        if ($request->hasFile('company_profile_pdf')) {
+            $data['company_profile_pdf'] = Storage::disk('public')->url(
+                $request->file('company_profile_pdf')->store('documents', 'public'),
+            );
+        }
+
+        $settings->setMany($data);
+
+        return redirect()->route('admin.settings.edit')->with('toast', ['type' => 'success', 'message' => 'Settings saved.']);
     }
 }
