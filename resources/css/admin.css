@@ -1,0 +1,37 @@
+@import 'tailwindcss';
+
+@source '../views/admin';
+@source '../views/layouts';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans:
+        'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-forest-deep: #0b2118;
+    --color-forest: #123c2a;
+    --color-pine: #174b35;
+    --color-moss: #315c45;
+    --color-sage: #829b88;
+    --color-sage-soft: #b8c8ba;
+    --color-ivory: #f5f3ea;
+    --color-white-warm: #fafaf6;
+    --color-stone: #dcddd3;
+    --color-charcoal: #18201b;
+    --color-gold: #b5a06a;
+}
+
+@layer base {
+    body {
+        @apply bg-stone text-charcoal font-sans antialiased;
+    }
+}
+
+trix-toolbar .trix-button-group {
+    @apply border-stone;
+}
+
+trix-editor {
+    @apply min-h-40 rounded border border-stone bg-white px-3 py-2 text-sm text-charcoal focus:border-forest focus:ring-1 focus:ring-forest focus:outline-none;
+}
