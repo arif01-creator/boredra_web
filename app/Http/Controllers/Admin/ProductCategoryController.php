@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductCategoryRequest;
 use App\Models\ProductCategory;
+use App\Services\MediaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
 class ProductCategoryController extends Controller
 {
@@ -23,12 +23,12 @@ class ProductCategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store(ProductCategoryRequest $request): RedirectResponse
+    public function store(ProductCategoryRequest $request, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('image');
 
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::disk('public')->url($request->file('image')->store('categories', 'public'));
+            $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'categories');
         }
 
         ProductCategory::create($data);
@@ -41,12 +41,12 @@ class ProductCategoryController extends Controller
         return view('admin.categories.edit', ['category' => $category]);
     }
 
-    public function update(ProductCategoryRequest $request, ProductCategory $category): RedirectResponse
+    public function update(ProductCategoryRequest $request, ProductCategory $category, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('image');
 
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::disk('public')->url($request->file('image')->store('categories', 'public'));
+            $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'categories');
         }
 
         $category->update($data);

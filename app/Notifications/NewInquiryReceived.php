@@ -13,6 +13,9 @@ class NewInquiryReceived extends Notification
 
     public function __construct(public readonly Inquiry $inquiry) {}
 
+    /**
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
         return ['mail'];

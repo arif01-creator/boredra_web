@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Seed Admin Password
+    |--------------------------------------------------------------------------
+    |
+    | Optional fixed password for the seeded admin user, used by the test
+    | suite and local development. When unset, DatabaseSeeder generates a
+    | random secure password and prints it to the console.
+    |
+    */
+
+    'seed_admin_password' => env('SEED_ADMIN_PASSWORD'),
+
 ];

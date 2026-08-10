@@ -17,7 +17,7 @@ class SeoService
     {
         $page = Page::where('slug', $slug)->with('seo')->first();
 
-        return $this->build($page?->seo, $page?->title ?? $fallbackTitle, $fallbackDescription);
+        return $this->build($page?->seo, $page->title ?? $fallbackTitle, $fallbackDescription);
     }
 
     /**

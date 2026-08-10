@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\ProductCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -12,9 +13,13 @@ class ProductCategoryRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function rules(): array
     {
-        $categoryId = $this->route('category')?->id;
+        $category = $this->route('category');
+        $categoryId = $category instanceof ProductCategory ? $category->id : null;
 
         return [
             'name' => ['required', 'string', 'max:255'],

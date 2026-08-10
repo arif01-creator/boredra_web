@@ -27,6 +27,9 @@ class SeoMeta extends Model
         ];
     }
 
+    /**
+     * @return MorphTo<Model, $this>
+     */
     public function seoable(): MorphTo
     {
         return $this->morphTo();

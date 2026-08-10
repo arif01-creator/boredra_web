@@ -20,6 +20,9 @@ class Page extends Model
         ];
     }
 
+    /**
+     * @return MorphOne<SeoMeta, $this>
+     */
     public function seo(): MorphOne
     {
         return $this->morphOne(SeoMeta::class, 'seoable');

@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedAdmin(): void
     {
-        $password = (string) env('SEED_ADMIN_PASSWORD', Str::password(16));
+        $password = (string) (config('app.seed_admin_password') ?? Str::password(16));
 
         User::updateOrCreate(
             ['email' => 'admin@borendra.com'],
@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        $this->command?->warn("Seeded admin login → admin@borendra.com / {$password}");
+        $this->command->warn("Seeded admin login → admin@borendra.com / {$password}");
     }
 
     private function seedProductCatalogue(): void
@@ -177,7 +177,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'privacy',
                 'title' => 'Privacy Policy',
                 'sections' => [
-                    'body' => "This Privacy Policy explains how Borendra International collects and uses information submitted through this website, including inquiry form submissions. Add the full policy text via Admin → Pages.",
+                    'body' => 'This Privacy Policy explains how Borendra International collects and uses information submitted through this website, including inquiry form submissions. Add the full policy text via Admin → Pages.',
                 ],
             ],
             [

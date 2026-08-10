@@ -59,6 +59,7 @@ class InquiryController extends Controller
 
         return response()->streamDownload(function () use ($inquiries) {
             $out = fopen('php://output', 'w');
+            abort_if($out === false, 500, 'Failed to open output stream.');
             fputcsv($out, ['Name', 'Company', 'Email', 'Phone', 'Country', 'Product Interest', 'Quantity', 'Message', 'Status', 'Received']);
 
             foreach ($inquiries as $inquiry) {

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\QualityProcessRequest;
 use App\Models\QualityProcess;
+use App\Services\MediaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
 class QualityProcessController extends Controller
 {
@@ -23,12 +23,12 @@ class QualityProcessController extends Controller
         return view('admin.quality.create');
     }
 
-    public function store(QualityProcessRequest $request): RedirectResponse
+    public function store(QualityProcessRequest $request, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('image');
 
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::disk('public')->url($request->file('image')->store('quality', 'public'));
+            $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'quality');
         }
 
         QualityProcess::create($data);
@@ -41,12 +41,12 @@ class QualityProcessController extends Controller
         return view('admin.quality.edit', ['stage' => $quality]);
     }
 
-    public function update(QualityProcessRequest $request, QualityProcess $quality): RedirectResponse
+    public function update(QualityProcessRequest $request, QualityProcess $quality, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('image');
 
         if ($request->hasFile('image')) {
-            $data['image'] = Storage::disk('public')->url($request->file('image')->store('quality', 'public'));
+            $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'quality');
         }
 
         $quality->update($data);

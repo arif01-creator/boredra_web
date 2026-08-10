@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Services\MediaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -28,14 +28,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function store(ProductRequest $request): RedirectResponse
+    public function store(ProductRequest $request, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('featured_image');
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = Storage::disk('public')->url(
-                $request->file('featured_image')->store('products', 'public'),
-            );
+            $data['featured_image'] = $mediaService->storeAndUrl($request->file('featured_image'), 'products');
         }
 
         Product::create($data);
@@ -54,14 +52,12 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(ProductRequest $request, Product $product): RedirectResponse
+    public function update(ProductRequest $request, Product $product, MediaService $mediaService): RedirectResponse
     {
         $data = $request->safe()->except('featured_image');
 
         if ($request->hasFile('featured_image')) {
-            $data['featured_image'] = Storage::disk('public')->url(
-                $request->file('featured_image')->store('products', 'public'),
-            );
+            $data['featured_image'] = $mediaService->storeAndUrl($request->file('featured_image'), 'products');
         }
 
         $product->update($data);
