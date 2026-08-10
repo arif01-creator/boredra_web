@@ -18,8 +18,10 @@ class ResponsibilityItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'title.en' => ['required', 'string', 'max:255'],
+            'title.bn' => ['nullable', 'string', 'max:255'],
+            'description.en' => ['nullable', 'string'],
+            'description.bn' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:100'],
             'status' => ['required', Rule::in(['draft', 'published'])],
             'sort_order' => ['nullable', 'integer', 'min:0'],

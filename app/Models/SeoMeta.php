@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Spatie\Translatable\HasTranslations;
 
 class SeoMeta extends Model
 {
+    use HasTranslations;
+
     protected $table = 'seo_metas';
 
     protected $fillable = [
@@ -19,6 +22,11 @@ class SeoMeta extends Model
         'robots',
         'schema_json',
     ];
+
+    /**
+     * @var array<int, string>
+     */
+    public array $translatable = ['title', 'meta_description', 'og_title', 'og_description'];
 
     protected function casts(): array
     {

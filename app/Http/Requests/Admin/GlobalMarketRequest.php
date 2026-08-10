@@ -18,8 +18,10 @@ class GlobalMarketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'country.en' => ['required', 'string', 'max:255'],
+            'country.bn' => ['nullable', 'string', 'max:255'],
+            'description.en' => ['nullable', 'string'],
+            'description.bn' => ['nullable', 'string'],
             'latitude' => ['required', 'numeric', 'between:-90,90'],
             'longitude' => ['required', 'numeric', 'between:-180,180'],
             'status' => ['required', Rule::in(['draft', 'published'])],

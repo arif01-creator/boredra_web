@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CompanyStatRequest;
 use App\Models\CompanyStat;
+use App\Support\TranslatableInput;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class CompanyStatController extends Controller
 {
+    private const TRANSLATABLE = ['label', 'value'];
+
     public function index(): View
     {
         return view('admin.company-stats.index', [
@@ -24,7 +27,7 @@ class CompanyStatController extends Controller
 
     public function store(CompanyStatRequest $request): RedirectResponse
     {
-        CompanyStat::create($request->validated());
+        CompanyStat::create(TranslatableInput::pruneEmptyLocales($request->validated(), self::TRANSLATABLE));
 
         return redirect()->route('admin.company-stats.index')->with('toast', ['type' => 'success', 'message' => 'Stat added.']);
     }
@@ -36,7 +39,7 @@ class CompanyStatController extends Controller
 
     public function update(CompanyStatRequest $request, CompanyStat $companyStat): RedirectResponse
     {
-        $companyStat->update($request->validated());
+        $companyStat->update(TranslatableInput::pruneEmptyLocales($request->validated(), self::TRANSLATABLE));
 
         return redirect()->route('admin.company-stats.index')->with('toast', ['type' => 'success', 'message' => 'Stat updated.']);
     }

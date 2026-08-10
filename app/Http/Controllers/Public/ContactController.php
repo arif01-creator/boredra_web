@@ -19,7 +19,7 @@ class ContactController extends Controller
     public function create(SeoService $seo): Response
     {
         return Inertia::render('contact', [
-            'productOptions' => Product::where('status', 'published')->orderBy('sort_order')->pluck('name'),
+            'productOptions' => Product::where('status', 'published')->orderBy('sort_order')->get()->map(fn (Product $product) => $product->name)->values(),
             'seo' => $seo->forTitle("Contact — Let's Build a Global Connection."),
         ]);
     }

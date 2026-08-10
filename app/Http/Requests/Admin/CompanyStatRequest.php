@@ -18,8 +18,10 @@ class CompanyStatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'label' => ['required', 'string', 'max:255'],
-            'value' => ['required', 'string', 'max:255'],
+            'label.en' => ['required', 'string', 'max:255'],
+            'label.bn' => ['nullable', 'string', 'max:255'],
+            'value.en' => ['required', 'string', 'max:255'],
+            'value.bn' => ['nullable', 'string', 'max:255'],
             'status' => ['required', Rule::in(['draft', 'published'])],
             'sort_order' => ['nullable', 'integer', 'min:0'],
         ];

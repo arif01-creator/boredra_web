@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SeoRequest;
 use App\Models\Page;
 use App\Models\Product;
+use App\Support\TranslatableInput;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -14,8 +15,8 @@ class SeoController extends Controller
     public function index(): View
     {
         return view('admin.seo.index', [
-            'pages' => Page::orderBy('title')->get(),
-            'products' => Product::orderBy('name')->get(),
+            'pages' => Page::orderByRaw("json_extract(title, '$.en') asc")->get(),
+            'products' => Product::orderByRaw("json_extract(name, '$.en') asc")->get(),
         ]);
     }
 
@@ -34,7 +35,12 @@ class SeoController extends Controller
     {
         $model = $this->resolve($type, $id);
 
-        $model->seo()->updateOrCreate([], $request->validated());
+        $data = TranslatableInput::pruneEmptyLocales(
+            $request->validated(),
+            ['title', 'meta_description', 'og_title', 'og_description'],
+        );
+
+        $model->seo()->updateOrCreate([], $data);
 
         return redirect()->route('admin.seo.index')->with('toast', ['type' => 'success', 'message' => 'SEO updated.']);
     }

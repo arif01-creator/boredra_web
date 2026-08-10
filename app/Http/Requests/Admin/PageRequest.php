@@ -17,7 +17,8 @@ class PageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sections' => ['nullable', 'array'],
+            'sections.en' => ['nullable', 'array'],
+            'sections.bn' => ['nullable', 'array'],
         ];
     }
 }

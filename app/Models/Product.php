@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Translatable\HasTranslations;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use HasTranslations, SoftDeletes;
 
     protected $fillable = [
         'product_category_id',
@@ -25,11 +26,20 @@ class Product extends Model
         'sort_order',
     ];
 
+    /**
+     * @var array<int, string>
+     */
+    public array $translatable = [
+        'name',
+        'short_description',
+        'long_description',
+        'specifications',
+        'applications',
+    ];
+
     protected function casts(): array
     {
         return [
-            'specifications' => 'array',
-            'applications' => 'array',
             'sort_order' => 'integer',
         ];
     }

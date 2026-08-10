@@ -4,21 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Spatie\Translatable\HasTranslations;
 
 class Page extends Model
 {
+    use HasTranslations;
+
     protected $fillable = [
         'slug',
         'title',
         'sections',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'sections' => 'array',
-        ];
-    }
+    /**
+     * @var array<int, string>
+     */
+    public array $translatable = ['title', 'sections'];
 
     /**
      * @return MorphOne<SeoMeta, $this>

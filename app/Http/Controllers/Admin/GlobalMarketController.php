@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GlobalMarketRequest;
 use App\Models\GlobalMarket;
+use App\Support\TranslatableInput;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class GlobalMarketController extends Controller
 {
+    private const TRANSLATABLE = ['country', 'description'];
+
     public function index(): View
     {
         return view('admin.global-reach.index', [
@@ -24,7 +27,7 @@ class GlobalMarketController extends Controller
 
     public function store(GlobalMarketRequest $request): RedirectResponse
     {
-        GlobalMarket::create($request->validated());
+        GlobalMarket::create(TranslatableInput::pruneEmptyLocales($request->validated(), self::TRANSLATABLE));
 
         return redirect()->route('admin.global-reach.index')->with('toast', ['type' => 'success', 'message' => 'Market added.']);
     }
@@ -36,7 +39,7 @@ class GlobalMarketController extends Controller
 
     public function update(GlobalMarketRequest $request, GlobalMarket $globalReach): RedirectResponse
     {
-        $globalReach->update($request->validated());
+        $globalReach->update(TranslatableInput::pruneEmptyLocales($request->validated(), self::TRANSLATABLE));
 
         return redirect()->route('admin.global-reach.index')->with('toast', ['type' => 'success', 'message' => 'Market updated.']);
     }

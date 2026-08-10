@@ -13,7 +13,7 @@ class PageController extends Controller
     public function index(): View
     {
         return view('admin.pages.index', [
-            'pages' => Page::orderBy('title')->get(),
+            'pages' => Page::orderByRaw("json_extract(title, '$.en') asc")->get(),
         ]);
     }
 
@@ -24,9 +24,19 @@ class PageController extends Controller
 
     public function update(PageRequest $request, Page $page): RedirectResponse
     {
-        $sections = $request->except(['_token', '_method']);
+        $sections = $request->input('sections', []);
 
-        $page->update(['sections' => $sections]);
+        foreach ($sections as $locale => $fields) {
+            $sections[$locale] = array_filter(
+                (array) $fields,
+                fn (mixed $value): bool => is_string($value) ? trim($value) !== '' : $value !== null,
+            );
+        }
+
+        $sections = array_filter($sections);
+
+        $page->setTranslations('sections', $sections);
+        $page->save();
 
         return redirect()->route('admin.pages.index')->with('toast', ['type' => 'success', 'message' => 'Page updated.']);
     }

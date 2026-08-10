@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\QualityProcessRequest;
 use App\Models\QualityProcess;
 use App\Services\MediaService;
+use App\Support\TranslatableInput;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class QualityProcessController extends Controller
 {
+    private const TRANSLATABLE = ['title', 'description'];
+
     public function index(): View
     {
         return view('admin.quality.index', [
@@ -25,7 +28,7 @@ class QualityProcessController extends Controller
 
     public function store(QualityProcessRequest $request, MediaService $mediaService): RedirectResponse
     {
-        $data = $request->safe()->except('image');
+        $data = TranslatableInput::pruneEmptyLocales($request->safe()->except('image'), self::TRANSLATABLE);
 
         if ($request->hasFile('image')) {
             $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'quality');
@@ -43,7 +46,7 @@ class QualityProcessController extends Controller
 
     public function update(QualityProcessRequest $request, QualityProcess $quality, MediaService $mediaService): RedirectResponse
     {
-        $data = $request->safe()->except('image');
+        $data = TranslatableInput::pruneEmptyLocales($request->safe()->except('image'), self::TRANSLATABLE);
 
         if ($request->hasFile('image')) {
             $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'quality');

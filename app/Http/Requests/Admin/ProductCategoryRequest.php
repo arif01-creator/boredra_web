@@ -22,9 +22,11 @@ class ProductCategoryRequest extends FormRequest
         $categoryId = $category instanceof ProductCategory ? $category->id : null;
 
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'name.en' => ['required', 'string', 'max:255'],
+            'name.bn' => ['nullable', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', Rule::unique('product_categories', 'slug')->ignore($categoryId)],
-            'description' => ['nullable', 'string'],
+            'description.en' => ['nullable', 'string'],
+            'description.bn' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'max:5120'],
             'status' => ['required', Rule::in(['draft', 'published'])],
             'sort_order' => ['nullable', 'integer', 'min:0'],

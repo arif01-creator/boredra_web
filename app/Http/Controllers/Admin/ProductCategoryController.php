@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductCategoryRequest;
 use App\Models\ProductCategory;
 use App\Services\MediaService;
+use App\Support\TranslatableInput;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class ProductCategoryController extends Controller
 {
+    private const TRANSLATABLE = ['name', 'description'];
+
     public function index(): View
     {
         return view('admin.categories.index', [
@@ -25,7 +28,7 @@ class ProductCategoryController extends Controller
 
     public function store(ProductCategoryRequest $request, MediaService $mediaService): RedirectResponse
     {
-        $data = $request->safe()->except('image');
+        $data = TranslatableInput::pruneEmptyLocales($request->safe()->except('image'), self::TRANSLATABLE);
 
         if ($request->hasFile('image')) {
             $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'categories');
@@ -43,7 +46,7 @@ class ProductCategoryController extends Controller
 
     public function update(ProductCategoryRequest $request, ProductCategory $category, MediaService $mediaService): RedirectResponse
     {
-        $data = $request->safe()->except('image');
+        $data = TranslatableInput::pruneEmptyLocales($request->safe()->except('image'), self::TRANSLATABLE);
 
         if ($request->hasFile('image')) {
             $data['image'] = $mediaService->storeAndUrl($request->file('image'), 'categories');
