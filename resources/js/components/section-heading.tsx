@@ -2,9 +2,9 @@ import { Reveal } from '@/components/reveal';
 import { cn } from '@/lib/utils';
 
 type SectionHeadingProps = {
-    label?: string;
+    label?: string | null;
     heading: string;
-    description?: string;
+    description?: string | null;
     align?: 'left' | 'center';
     className?: string;
     tone?: 'dark' | 'light';

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ImagePlaceholder } from '@/components/image-placeholder';
-import { cn } from '@/lib/utils';
 import { ensureGsap, prefersReducedMotion } from '@/lib/gsap';
+import { cn } from '@/lib/utils';
 import type { QualityStage } from '@/types/models';
 
 type QualityTimelineProps = {
@@ -16,7 +16,10 @@ export function QualityTimeline({ stages }: QualityTimelineProps) {
 
     useEffect(() => {
         const el = containerRef.current;
-        if (!el || reduced || stages.length === 0) return;
+
+        if (!el || reduced || stages.length === 0) {
+return;
+}
 
         const { gsap, ScrollTrigger } = ensureGsap();
 
@@ -38,7 +41,9 @@ export function QualityTimeline({ stages }: QualityTimelineProps) {
         };
     }, [reduced, stages.length]);
 
-    if (stages.length === 0) return null;
+    if (stages.length === 0) {
+return null;
+}
 
     return (
         <div ref={containerRef} className="relative flex min-h-screen items-center overflow-hidden bg-forest-deep text-ivory">

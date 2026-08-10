@@ -1,6 +1,7 @@
-import { useEffect, useRef, type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef  } from 'react';
+import type {ReactNode} from 'react';
 import { ensureGsap, prefersReducedMotion } from '@/lib/gsap';
+import { cn } from '@/lib/utils';
 
 type ImageRevealProps = {
     className?: string;
@@ -19,11 +20,15 @@ export function ImageReveal({ className, imgClassName, children }: ImageRevealPr
     useEffect(() => {
         const wrap = wrapRef.current;
         const inner = imgRef.current;
-        if (!wrap || !inner) return;
+
+        if (!wrap || !inner) {
+return;
+}
 
         if (prefersReducedMotion()) {
             inner.style.transform = 'none';
             inner.style.clipPath = 'inset(0 0 0 0)';
+
             return;
         }
 
@@ -55,7 +60,9 @@ export function ImageReveal({ className, imgClassName, children }: ImageRevealPr
         return () => {
             ctx.revert();
             ScrollTrigger.getAll().forEach((trigger) => {
-                if (trigger.trigger === wrap) trigger.kill();
+                if (trigger.trigger === wrap) {
+trigger.kill();
+}
             });
         };
     }, []);

@@ -13,12 +13,14 @@ const ORIGIN = { lat: 23.8103, lng: 90.4125 }; // Dhaka, Bangladesh
 function project(lat: number, lng: number) {
     const x = ((lng + 180) / 360) * WIDTH;
     const y = ((90 - lat) / 180) * HEIGHT;
+
     return { x, y };
 }
 
 function arcPath(from: { x: number; y: number }, to: { x: number; y: number }) {
     const mx = (from.x + to.x) / 2;
     const my = Math.min(from.y, to.y) - Math.abs(to.x - from.x) * 0.18 - 24;
+
     return `M ${from.x} ${from.y} Q ${mx} ${my} ${to.x} ${to.y}`;
 }
 
@@ -29,7 +31,10 @@ export function GlobalMap({ markets }: GlobalMapProps) {
 
     useEffect(() => {
         const svg = svgRef.current;
-        if (!svg || reduced) return;
+
+        if (!svg || reduced || markets.length === 0) {
+            return;
+        }
 
         const { gsap, ScrollTrigger } = ensureGsap();
         const paths = svg.querySelectorAll<SVGPathElement>('.route-path');
@@ -64,15 +69,24 @@ export function GlobalMap({ markets }: GlobalMapProps) {
         return () => {
             ctx.revert();
             ScrollTrigger.getAll().forEach((t) => {
-                if (t.trigger === svg) t.kill();
+                if (t.trigger === svg) {
+t.kill();
+}
             });
         };
     }, [reduced, markets.length]);
 
     const gridLines = [];
-    for (let i = 0; i <= 12; i++) gridLines.push((i * WIDTH) / 12);
+
+    for (let i = 0; i <= 12; i++) {
+gridLines.push((i * WIDTH) / 12);
+}
+
     const gridRows = [];
-    for (let i = 0; i <= 6; i++) gridRows.push((i * HEIGHT) / 6);
+
+    for (let i = 0; i <= 6; i++) {
+gridRows.push((i * HEIGHT) / 6);
+}
 
     return (
         <svg ref={svgRef} viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="h-auto w-full" role="img" aria-label="Map of export destinations from Bangladesh">
@@ -85,6 +99,7 @@ export function GlobalMap({ markets }: GlobalMapProps) {
 
             {markets.map((market) => {
                 const point = project(market.latitude, market.longitude);
+
                 return (
                     <g key={market.id}>
                         <path

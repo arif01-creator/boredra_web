@@ -6,7 +6,9 @@ type StatsProps = {
 };
 
 export function Stats({ stats }: StatsProps) {
-    if (stats.length === 0) return null;
+    if (stats.length === 0) {
+return null;
+}
 
     return (
         <div className="grid grid-cols-1 gap-10 border-t border-stone pt-14 sm:grid-cols-3">

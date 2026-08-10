@@ -1,6 +1,6 @@
+import { MagneticButton } from '@/components/magnetic-button';
 import { Section } from '@/components/section';
 import { SectionHeading } from '@/components/section-heading';
-import { MagneticButton } from '@/components/magnetic-button';
 
 type CtaProps = {
     label?: string;

@@ -1,5 +1,6 @@
 import { Head, usePage } from '@inertiajs/react';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState  } from 'react';
+import type {ReactNode} from 'react';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { cn } from '@/lib/utils';
@@ -15,6 +16,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
 
     useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 700);
+
         return () => clearTimeout(timer);
     }, []);
 

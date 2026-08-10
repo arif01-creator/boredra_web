@@ -21,11 +21,13 @@ export function SiteHeader() {
         }
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
+
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? 'hidden' : '';
+
         return () => {
             document.body.style.overflow = '';
         };
@@ -75,23 +77,20 @@ export function SiteHeader() {
                 </button>
             </div>
 
-            <div
-                className={cn(
-                    'fixed inset-0 top-20 z-40 flex flex-col justify-center gap-2 bg-forest-deep px-8 transition-all duration-300 lg:hidden',
-                    menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0',
-                )}
-            >
-                {NAV.map((item) => (
-                    <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setMenuOpen(false)}
-                        className="border-b border-ivory/10 py-4 font-serif text-3xl text-ivory"
-                    >
-                        {item.label}
-                    </Link>
-                ))}
-            </div>
+            {menuOpen && (
+                <div className="fixed inset-0 top-20 z-40 flex flex-col justify-center gap-2 bg-forest-deep px-8 lg:hidden">
+                    {NAV.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMenuOpen(false)}
+                            className="border-b border-ivory/10 py-4 font-serif text-3xl text-ivory"
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                </div>
+            )}
         </header>
     );
 }

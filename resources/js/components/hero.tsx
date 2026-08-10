@@ -16,7 +16,10 @@ export function Hero({ image }: HeroProps) {
     const ctaRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (prefersReducedMotion()) return;
+        if (prefersReducedMotion()) {
+return;
+}
+
         const { gsap } = ensureGsap();
 
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });

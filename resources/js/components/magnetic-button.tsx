@@ -1,7 +1,9 @@
-import { Link, type InertiaLinkProps } from '@inertiajs/react';
-import { useRef, type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { Link  } from '@inertiajs/react';
+import type {InertiaLinkProps} from '@inertiajs/react';
+import { useRef  } from 'react';
+import type {ReactNode} from 'react';
 import { ensureGsap, isTouchDevice, prefersReducedMotion } from '@/lib/gsap';
+import { cn } from '@/lib/utils';
 
 type MagneticButtonProps = {
     href?: InertiaLinkProps['href'];
@@ -24,9 +26,15 @@ export function MagneticButton({ href, onClick, type = 'button', variant = 'soli
     const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
 
     function handleMouseMove(event: React.MouseEvent) {
-        if (isTouchDevice() || prefersReducedMotion()) return;
+        if (isTouchDevice() || prefersReducedMotion()) {
+return;
+}
+
         const el = ref.current;
-        if (!el) return;
+
+        if (!el) {
+return;
+}
 
         const rect = el.getBoundingClientRect();
         const relX = event.clientX - rect.left - rect.width / 2;
@@ -38,7 +46,11 @@ export function MagneticButton({ href, onClick, type = 'button', variant = 'soli
 
     function handleMouseLeave() {
         const el = ref.current;
-        if (!el) return;
+
+        if (!el) {
+return;
+}
+
         const { gsap } = ensureGsap();
         gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
     }

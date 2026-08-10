@@ -20,7 +20,7 @@ export function ImagePlaceholder({ src, alt, className, label }: ImagePlaceholde
     return (
         <div
             className={cn(
-                'relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-forest-deep via-pine to-forest text-center',
+                'relative flex h-full w-full items-end justify-start overflow-hidden bg-gradient-to-br from-forest-deep via-pine to-forest',
                 className,
             )}
         >
@@ -31,7 +31,7 @@ export function ImagePlaceholder({ src, alt, className, label }: ImagePlaceholde
                         'radial-gradient(circle at 20% 20%, white 0, transparent 45%), radial-gradient(circle at 80% 60%, white 0, transparent 40%)',
                 }}
             />
-            <span className="label-micro relative px-6 text-sage-soft">{label ?? alt}</span>
+            <span className="label-micro relative px-4 py-3 text-sage-soft/40">{label ?? alt}</span>
         </div>
     );
 }

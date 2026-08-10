@@ -1,6 +1,7 @@
-import { useEffect, useRef, type ElementType, type ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { useEffect, useRef   } from 'react';
+import type {ElementType, ReactNode} from 'react';
 import { ensureGsap, prefersReducedMotion } from '@/lib/gsap';
+import { cn } from '@/lib/utils';
 
 type RevealProps = {
     children: ReactNode;
@@ -16,11 +17,15 @@ export function Reveal({ children, className, as: Tag = 'div', y = 28, delay = 0
 
     useEffect(() => {
         const el = ref.current;
-        if (!el) return;
+
+        if (!el) {
+return;
+}
 
         if (prefersReducedMotion()) {
             el.style.opacity = '1';
             el.style.transform = 'none';
+
             return;
         }
 
@@ -48,7 +53,9 @@ export function Reveal({ children, className, as: Tag = 'div', y = 28, delay = 0
         return () => {
             ctx.revert();
             ScrollTrigger.getAll().forEach((trigger) => {
-                if (trigger.trigger === el) trigger.kill();
+                if (trigger.trigger === el) {
+trigger.kill();
+}
             });
         };
     }, [y, delay, duration]);
